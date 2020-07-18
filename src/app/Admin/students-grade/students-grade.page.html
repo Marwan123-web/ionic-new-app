@@ -1,0 +1,63 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button *ngIf="isAdmin" defaultHref="courses"></ion-back-button>
+            <ion-back-button *ngIf="isTeacher" defaultHref="mycourses"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/profile']">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            {{ 'STUDENTGRADES' | uppercase | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" id="student-grade">
+    <ion-list class="ion-padding">
+        <table class="table table-hover table-light display">
+            <thead>
+                <tr *ngIf="coursedata">
+                    <th scope="col">{{ 'ID' | translate }}</th>
+                    <th scope="col">{{ 'NAME' | translate }}</th>
+                    <th scope="col" *ngFor="let grades of coursedata">{{grades.type}} ({{grades.grade}})</th>
+                    <th scope="col" *ngIf="courseTotalGrades">Total ({{courseTotalGrades.totalGrades}})
+                    </th>
+                </tr>
+            </thead>
+            <tbody *ngIf="usertotalgradestotal">
+                <tr *ngFor="let userdata of usertotalgradestotal;index as i;">
+                    <td scope="col">{{userdata.user._id}}</td>
+                    <td scope="col">{{userdata.user.name}}</td>
+                    <td scope="col" *ngFor="let fdata of things[i]">{{fdata}}</td>
+                    <td scope="col">{{userdata.totalGrades.totalGrades}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <!-- (click)="addStudentGrade()" -->
+        <div *ngIf="courseDataCode">
+            <ion-row *ngIf="isTeacherOrAdmin">
+                <ion-col size="6" *ngIf="courseSemesterDataCode">
+                    <ion-button id="student-grade-addGRADEBtn" *ngIf="hidebutton" type="submit" expand="block" class="ionBtn ionBtn-success" value="AddGrade" [routerLink]="['/course/semester/add-student-grade',courseDataCode.courseCode,courseSemesterDataCode.semester_time]">
+                        <ion-icon name="add" slot="start"></ion-icon>
+                        {{ 'ADDGRADE' | translate }}
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6" *ngIf="courseSemesterDataCode">
+                    <ion-button id="courses-manageCourseBtn" *ngIf="hidebutton" type="submit" expand="block" class="ionBtn ionBtn-danger" value="UpdateGrade" [routerLink]="['/course/semester/update-student-grade',courseDataCode.courseCode,courseSemesterDataCode.semester_time]">
+                        <ion-icon name="create-outline" slot="start"></ion-icon>
+                        {{ 'UPDATEGRADE' | translate }}
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+            <div *ngIf="courseSemesterDataCode">
+                <ion-button id="gradessheet-gradesReportBtn" type="submit" expand="block" color="light" *ngIf="isTeacherOrAdmin" value="gradesReport" [routerLink]="['/course/semester/students-grades-report',courseDataCode.courseCode,courseSemesterDataCode.semester_time]">
+                    <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+                    {{ 'GRADESREPORT' | translate }}
+                </ion-button>
+            </div>
+        </div>
+    </ion-list>
+</ion-content>

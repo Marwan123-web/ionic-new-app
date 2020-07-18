@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="mycourses"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/profile']">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            {{ 'ADDNEWLECTURE' | uppercase | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" id="add-lecture">
+    <form id="addLecture-form" (ngSubmit)="AddLeacture()">
+        <ion-list>
+            <ion-item id="addLecture-location">
+                <ion-label>
+                    {{ 'LOCATION' | translate}}
+                </ion-label>
+                <ion-select [(ngModel)]="hallslocation" [ngModelOptions]="{standalone: true}" slot="end" [interfaceOptions]="customPopoverOptions" interface="popover" placeholder="{{ 'SELECTLOCATION' | translate }}" id='location' (ionChange)="onSelectChange($event)"
+                    #location aria-required="required">
+                    <ion-select-option *ngFor="let data of routersdata" value="{{data.routerAddress}}">
+                        {{ data.locationName }}
+                    </ion-select-option>
+                </ion-select>
+            </ion-item>
+            <br>
+            <ion-button id="addLecture-addNewLectureBtn" type="submit" expand="block" [disabled]="hallslocation==null" class="ionBtn ionBtn-success" value="AddNewLecture">
+                <ion-icon name="add" slot="start"></ion-icon>
+                {{ 'ADDNEWLECTURE' | translate }}
+            </ion-button>
+        </ion-list>
+    </form>
+</ion-content>

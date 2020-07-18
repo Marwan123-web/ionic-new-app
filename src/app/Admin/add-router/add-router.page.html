@@ -1,0 +1,74 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="routers"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/profile']">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            {{ 'ADDROUTER' | uppercase | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" id="add-router">
+    <form id="addrouter-form" [formGroup]="validations_form" (ngSubmit)="addRouter()">
+        <ion-list id="addrouter-info">
+            <ion-item id="addrouter-locationId">
+                <ion-label>
+                    {{ 'LOCATIONID' | translate }}
+                </ion-label>
+            </ion-item>
+            <ion-item id="addrouter-locationId">
+                <ion-input type="number" formControlName="locationId" id="locationIdinput" maxlength="5" placeholder="Enter Location ID" #locationId required></ion-input>
+            </ion-item>
+            <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.locationId">
+                    <div class="error-message" *ngIf="validations_form.get('locationId').hasError(validation.type) && (validations_form.get('locationId').dirty || validations_form.get('locationId').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                    </div>
+                </ng-container>
+            </div>
+            <ion-item id="addLocation-name">
+                <ion-label>
+                    {{ 'NAME' | translate }}
+                </ion-label>
+            </ion-item>
+            <ion-item id="addRouter-nameInput">
+                <ion-input type="text" formControlName="name" id="locationNameinput" placeholder="Enter Location Name" #locationName required>
+                </ion-input>
+            </ion-item>
+            <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.name">
+                    <div class="error-message" *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                    </div>
+                </ng-container>
+            </div>
+            <ion-item id="addRouter-routerAddress">
+                <ion-label>
+                    {{ 'ROUTERADDRESS' | translate }}
+                </ion-label>
+            </ion-item>
+            <ion-item id="addRouter-routerAddressInput">
+                <ion-input type="text" min="0" max="140" formControlName="routerAddress" placeholder="Enter Router's Address" id="routerAddressinput" #routerAddress required>
+                </ion-input>
+            </ion-item>
+            <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.routerAddress">
+                    <div class="error-message" *ngIf="validations_form.get('routerAddress').hasError(validation.type) && (validations_form.get('routerAddress').dirty || validations_form.get('routerAddress').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                    </div>
+                </ng-container>
+            </div>
+            <br>
+            <ion-button id="addRouter-addRouterBtn" type="submit" expand="block" [disabled]="!validations_form.valid" class="ionBtn ionBtn-success" value="AddRouter">
+                <ion-icon name="add" slot="start"></ion-icon>
+                {{ 'ADDROUTER' | translate }}
+            </ion-button>
+        </ion-list>
+    </form>
+
+</ion-content>

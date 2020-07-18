@@ -1,0 +1,70 @@
+<ion-header>
+    <ion-toolbar>
+        <!-- <ion-buttons slot="start">
+            <ion-back-button defaultHref="routers"></ion-back-button>
+        </ion-buttons> -->
+        <!-- <ion-buttons slot="end">
+            <ion-button [routerLink]="['/profile']">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons> -->
+        <ion-title>
+            {{ 'ROUTERS' | uppercase | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" id="routers">
+    <ion-list>
+        <ion-item>
+            <ion-label position="floating">
+                <ion-icon name="search-outline" slot="start"></ion-icon>{{ 'SEARCH' | translate }}</ion-label>
+            <ion-input matInput (keyup)="applyFilter($event)" #input></ion-input>
+        </ion-item>
+        <div class="mat-elevation-z8 scroll-table">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- Location ID Column -->
+                <ng-container matColumnDef="locationId">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'LOCATIONID' | translate }} </th>
+                    <td mat-cell *matCellDef="let router"> <a>{{router.locationId}}</a> </td>
+                </ng-container>
+
+                <!-- Location Name Column -->
+                <ng-container matColumnDef="locationName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'LOCATION' | translate }} </th>
+                    <td mat-cell *matCellDef="let router"> {{router.locationName}} </td>
+                </ng-container>
+
+                <!-- Router Address Column -->
+                <ng-container matColumnDef="routerAddress">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'ROUTER' | translate }} </th>
+                    <td mat-cell *matCellDef="let router"> {{router.routerAddress}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <br>
+        <ion-row>
+            <ion-col size="6">
+                <ion-button id="routers-addRoutersBtn" type="submit" expand="block" routerLink='/routers/add-router' class="ionBtn ionBtn-success" value="AddRouter">
+                    <ion-icon name="add" slot="start"></ion-icon>
+                    {{ 'ADDROUTER' | translate }}
+                </ion-button>
+            </ion-col>
+            <ion-col size="6">
+                <ion-button id="routers-manageRouterBtn" type="submit" expand="block" routerLink='/routers/manage-router' class="ionBtn ionBtn-danger" value="ManageRouter">
+                    <ion-icon name="create-outline" slot="start"></ion-icon>
+                    {{ 'MANAGEROUTER' | translate }}
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-list>
+</ion-content>

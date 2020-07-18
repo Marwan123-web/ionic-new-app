@@ -1,0 +1,69 @@
+<ion-header>
+    <ion-toolbar>
+        <!-- <ion-buttons slot="secondary">
+            <ion-button [routerLink]="['/profile']">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons> -->
+        <ion-title>
+            {{ 'HOME' | uppercase | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+    <ion-item id="courses-select" *ngIf="isAdmin">
+        <ion-label>
+            {{ 'POSTS' | translate }}
+        </ion-label>
+        <ion-select [(ngModel)]="posts" [ngModelOptions]="{standalone: true}" slot="end" interface="popover" id='posts'
+            (ionChange)="onSelectChange($event)">
+            <ion-select-option value="">{{ 'ALLPOSTS' | translate }}</ion-select-option>
+            <ion-select-option value="myposts">{{ 'MYPOSTS' | translate }}</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <div class="container bootstrap snippet" *ngIf="isAdmin">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6 col-xs-12">
+                <div class="well well-sm well-social-post">
+                    <form id="addPost-form" [formGroup]="validations_form" (ngSubmit)="addPost()">
+                        <textarea class="form-control" placeholder="What's in your mind?" formControlName="post"
+                            id="contentTextArea"></textarea>
+                        <ion-button id="addNewPost-addNewPostBtn" type="submit" expand="block"
+                            [disabled]="!validations_form.valid" class="ionBtn ionBtn-success" value="addNewPost">
+                            <ion-icon name="arrow-up-circle-outline" slot="start"></ion-icon>
+                            {{ 'POST' | translate }}
+                        </ion-button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <ion-card *ngFor="let post of postdata">
+            <ion-list>
+                <ion-item color="none">
+                    <h2>{{post.author_name}}</h2>
+                </ion-item>
+                <ion-item color="none">
+                    {{post.date}}
+                </ion-item>
+                <ion-item>
+                    <div class="show-list-numbers-and-dots">
+                        <p color="none">
+                            <strong>
+                                {{post.body}}
+                            </strong>
+                        </p>
+                    </div>
+                </ion-item>
+                <ion-button id="deletePost-deletePostBtn" type="submit" expand="block" class="ionBtn ionBtn-danger"
+                    *ngIf="hidebutton" value="deletePost" (click)="deletePost(post._id)">
+                    <ion-icon name="trash-outline" slot="start"></ion-icon>
+                    {{ 'DELETEPOST' | translate }}
+                </ion-button>
+
+            </ion-list>
+        </ion-card>
+    </div>
+</ion-content>

@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="mycourses"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/profile']">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            {{ 'ASSIGNMENTS' | uppercase | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" id="assignments" *ngIf='coursesdata'>
+    <div>
+        <ion-card *ngFor="let tasks of coursesemesterdata">
+            <ion-list>
+                <ion-item color="none">
+                    {{tasks.type}}
+                </ion-item>
+                <ion-item>
+                    <div class="show-list-numbers-and-dots">
+                        <p style="margin-top:0px;color:#000000;">
+                            <strong>
+                                <a target="_blank" href="{{tasks.path}}">{{tasks.path}}</a>
+                            </strong>
+                        </p>
+                    </div>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+    </div>
+    <ion-row *ngIf="hidebutton">
+        <ion-col size="6" *ngIf="coursesemesterdata1">
+            <ion-button id="assignments-addTaskBtn" type="submit" expand="block" *ngIf="isTeacher" class="ionBtn ionBtn-success" value="addTask" [routerLink]="['/course/semester/add-task',coursesdata.courseCode,coursesemesterdata1.semester_time]">
+                <ion-icon name="add" slot="start"></ion-icon>
+                {{ 'ADDTASK' | translate }}
+            </ion-button>
+        </ion-col>
+        <ion-col size="6" *ngIf="coursesemesterdata1">
+            <ion-button id="assignments-deleteTaskBtn" type="submit" expand="block" *ngIf="isTeacher" class="ionBtn ionBtn-danger" value="deleteTask" [routerLink]="['/course/semester/delete-task',coursesdata.courseCode,coursesemesterdata1.semester_time]">
+                <ion-icon name="trash" slot="start"></ion-icon>
+                {{ 'DELETETASK' | translate }}
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-content>

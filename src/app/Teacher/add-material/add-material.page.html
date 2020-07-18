@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="mycourses"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/profile']">
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{ 'ADDNEWMATERIAL' | uppercase | translate}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" id="add-material">
+  <form id="addMaterial-form" [formGroup]="validations_form" (ngSubmit)="AddMaterial()">
+    <ion-list>
+      <ion-item id="addMaterial-title">
+        <ion-label>
+          {{ 'TITLE' | translate}} #
+        </ion-label>
+      </ion-item>
+      <ion-item id="addMaterial-titleInput">
+        <ion-input type="text" formControlName="title" placeholder="Enter Material Title" id="MaterialTypeinput"
+          #materialType required>
+        </ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.title">
+          <div class="error-message"
+            *ngIf="validations_form.get('title').hasError(validation.type) && (validations_form.get('title').dirty || validations_form.get('title').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <ion-item id="addMaterial-link">
+        <ion-label>
+          {{ 'LINK' | translate}}
+        </ion-label>
+      </ion-item>
+      <ion-item id="addMaterial-linkInput">
+        <ion-input type="text" formControlName="link" placeholder="Enter Material Link" id="materialPathinput"
+          #materialPath required>
+        </ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.link">
+          <div class="error-message"
+            *ngIf="validations_form.get('link').hasError(validation.type) && (validations_form.get('link').dirty || validations_form.get('link').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <br>
+      <ion-button id="addMaterial-addNewMaterialBtn" type="submit" expand="block" [disabled]="!validations_form.valid"
+        class="ionBtn ionBtn-success" value="AddNewMaterial">
+        <ion-icon name="add" slot="start"></ion-icon>
+        {{ 'ADDNEWMATERIAL' | translate }}
+      </ion-button>
+    </ion-list>
+  </form>
+</ion-content>

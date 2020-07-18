@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="mycourses"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/profile']">
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            {{ 'GRADES' | uppercase | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" id="grades">
+    <ion-list>
+        <h1 class="center" style="font-weight: bold;" *ngIf="usertotalgrades">
+            {{usertotalgrades.user._id}}
+        </h1>
+        <ion-row class="ion-padding">
+            <ion-col size="5" *ngIf="GradeTypeGrade">
+                <ion-label>
+                    <h3>{{ 'NAME' | translate}}</h3>
+                </ion-label>
+                <ion-label>
+                    <h3 *ngFor="let grade of GradeTypeGrade">{{grade.type}} ({{grade.grade}})</h3>
+                </ion-label>
+                <ion-label>
+                    <h3 *ngIf="courseTotalGrades">Total ({{courseTotalGrades.totalGrades}})</h3>
+                </ion-label>
+            </ion-col>
+            <ion-col size="7" *ngIf="usertotalgrades">
+                <ion-label>
+                    <h3 style="font-weight: bold;">{{usertotalgrades.user.name}}</h3>
+                </ion-label>
+                <ion-label>
+                    <h3 *ngFor="let grade of arrofdata" style="font-weight: bold;">{{grade.score}}</h3>
+                </ion-label>
+                <ion-label>
+                    <h3 style="font-weight: bold;">{{usertotalgrades.totalGrades.totalGrades}}</h3>
+                </ion-label>
+            </ion-col>
+        </ion-row>
+    </ion-list>
+</ion-content>
