@@ -39,15 +39,16 @@ export class TeacherServiceService {
   courseIdBody: any;
   studentIdBodyBody: any;
   gradeType: any;
-  addUserCourseBody: { courseCode: any; };
+  addUserCourseBody: any;
   addUserCourseId: any;
   deleteUserCourseBody: any;
   deleteUserCourseId: any;
-  url: any = "http://192.168.1.6:3000";
+  url: any = "http://192.168.1.5:3000";
   addCourseMaterialId: any;
-  addCourseMaterialBody: { type: any; path: any; };
+  addCourseMaterialBody: any;
   deleteCourseMaterialId: any;
   deleteCourseMaterialBody: any;
+  uploadSolutionBody: any;
 
   constructor(private httpClient: HttpClient) { }
   public getCourseSemesterData(courseCode, semester_time): Observable<any> {
@@ -100,8 +101,8 @@ export class TeacherServiceService {
     return this.httpClient.put(`${this.url}/update/course/semester/student/grade/${this.studentIdBody}/${this.courseIdBody}/${semester_time}`, this.updateStudentGradeBody, { headers: headers });
   }
 
-  public addCourseSemesterTask(courseCode, semester_time, type, path): Observable<any> {
-    this.addCourseTaskBody = { type, path };
+  public addCourseSemesterTask(courseCode, semester_time, type, path, deadLine): Observable<any> {
+    this.addCourseTaskBody = { type, path, deadLine };
     this.addCourseTaskId = courseCode;
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
     return this.httpClient.post(`${this.url}/add/course/semester/task/${this.addCourseTaskId}/${semester_time}`, this.addCourseTaskBody, { headers: headers });
@@ -228,5 +229,11 @@ export class TeacherServiceService {
 
   public getRouters(): Observable<any> {
     return this.httpClient.get(`${this.url}/routers`);
+  }
+
+  public uploadAssignment(studentId, courseId, semester_time, date, taskType, solutionLink): Observable<any> {
+    this.uploadSolutionBody = { date, taskType, solutionLink };
+    let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });
+    return this.httpClient.post(`${this.url}/upload/course/semester/assignment/solution/${studentId}/${courseId}/${semester_time}`, this.uploadSolutionBody, { headers: headers });
   }
 }

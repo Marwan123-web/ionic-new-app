@@ -153,5 +153,12 @@
     "DELETEMATERIAL": "مسح مصدر",
     "SELECTMATERIAL": "اختار مصدر",
     "POST": "انشر",
+    "UPLOADASSIGNMENT": "ارفع المهمه",
+    "SELECTASSIGNMENT": "اختار المهمه",
+    "SOLUTIONLINK": "رابط الحل",
+    "ASSIGNMENTSOLUTIONS":"حلول المهمات",
+    "DEADLINE": "حداقصى",
+
+
     "": ""
 }

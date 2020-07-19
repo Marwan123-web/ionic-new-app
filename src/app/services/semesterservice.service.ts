@@ -16,7 +16,7 @@ export class SemesterserviceService {
     this.currentCourseSemesterSubject = new BehaviorSubject<Semester>(JSON.parse(localStorage.getItem('currentCourseSemester')));
     this.currentCourseSemester = this.currentCourseSemesterSubject.asObservable();
   }
-  url: any = "http://192.168.1.6:3000";
+  url: any = "http://192.168.1.5:3000";
 
   public get currentCourseSemesterValue(): Semester {
     return this.currentCourseSemesterSubject.value;

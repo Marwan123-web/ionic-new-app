@@ -8,6 +8,8 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { AlertService } from 'src/app/services/alert.service';
 import { TranslateConfigService } from 'src/app/services/translate-config.service';
 import { WifiWizard2 } from '@ionic-native/wifi-wizard-2/ngx';
+import * as dateFormat from 'dateformat';
+
 @Component({
   selector: 'app-add-lecture',
   templateUrl: 'add-lecture.page.html',
@@ -36,6 +38,7 @@ export class addLecturePage implements OnInit {
   lectureno: any;
   lectures: any;
   customPopoverOptions: any;
+  dataOfLecture: any;
   constructor(
     private router: Router,
     private authenticationService: AuthService,
@@ -76,6 +79,8 @@ export class addLecturePage implements OnInit {
         this.courseCode = params.get('courseCode');
         this.semester_time = params.get('semester_time');
         // this.lectureNumber = lectureNumber.value;
+        var now = new Date();
+        this.dataOfLecture = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
         this.teacherservices.addCourseSemesterLecture(this.courseCode, this.semester_time, this.lectureno, this.locationaddress).subscribe(res => {
           if (res) {
             this.teacherservices.addCourseSemesterAttendance(this.courseCode, this.semester_time, this.lectureno, this.locationaddress).subscribe(res => {

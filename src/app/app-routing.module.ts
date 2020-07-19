@@ -289,6 +289,12 @@ const routes: Routes = [
     data: { roles: [Role.Teacher] }
   },
   {
+    path: 'course/semester/upload-assignment/:courseCode/:semester_time',
+    loadChildren: () => import('./Student/upload-assignment/upload-assignment.module').then(m => m.UploadAssignmentPageModule),
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Teacher] }
+  },
+  {
     path: 'course/semester/delete-task/:courseCode/:semester_time',
     loadChildren: () => import('./Teacher/delete-task/delete-task.module').then(m => m.deleteTaskPageModule),
     canActivate: [AuthGuard],
@@ -348,6 +354,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: [Role.Admin] }
   },
+
 
 
 

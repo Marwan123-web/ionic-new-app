@@ -153,5 +153,10 @@
     "DELETEMATERIAL": "Delete Material",
     "SELECTMATERIAL": "Select Material",
     "POST": "Post",
+    "UPLOADASSIGNMENT": "Upload Assignment",
+    "SELECTASSIGNMENT": "Select Assignment",
+    "SOLUTIONLINK": "Solution Link",
+    "ASSIGNMENTSOLUTIONS": "Assignment Solutions",
+    "DEADLINE": "Deadline",
     "": ""
 }

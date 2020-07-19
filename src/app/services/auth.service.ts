@@ -14,7 +14,7 @@ export class AuthService {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
-  url: any = "http://192.168.1.6:3000";
+  url: any = "http://192.168.1.5:3000";
   // url: any = "http://24-77-03-C3-F0-C4:3000";
 
   

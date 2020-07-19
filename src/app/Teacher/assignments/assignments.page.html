@@ -20,6 +20,9 @@
                 <ion-item color="none">
                     {{tasks.type}}
                 </ion-item>
+                <ion-item color="none">
+                    {{tasks.deadLine}}
+                </ion-item>
                 <ion-item>
                     <div class="show-list-numbers-and-dots">
                         <p style="margin-top:0px;color:#000000;">
@@ -34,16 +37,41 @@
     </div>
     <ion-row *ngIf="hidebutton">
         <ion-col size="6" *ngIf="coursesemesterdata1">
-            <ion-button id="assignments-addTaskBtn" type="submit" expand="block" *ngIf="isTeacher" class="ionBtn ionBtn-success" value="addTask" [routerLink]="['/course/semester/add-task',coursesdata.courseCode,coursesemesterdata1.semester_time]">
+            <ion-button id="assignments-addTaskBtn" type="submit" expand="block" *ngIf="isTeacher"
+                class="ionBtn ionBtn-success" value="addTask"
+                [routerLink]="['/course/semester/add-task',coursesdata.courseCode,coursesemesterdata1.semester_time]">
                 <ion-icon name="add" slot="start"></ion-icon>
                 {{ 'ADDTASK' | translate }}
             </ion-button>
         </ion-col>
         <ion-col size="6" *ngIf="coursesemesterdata1">
-            <ion-button id="assignments-deleteTaskBtn" type="submit" expand="block" *ngIf="isTeacher" class="ionBtn ionBtn-danger" value="deleteTask" [routerLink]="['/course/semester/delete-task',coursesdata.courseCode,coursesemesterdata1.semester_time]">
+            <ion-button id="assignments-deleteTaskBtn" type="submit" expand="block" *ngIf="isTeacher"
+                class="ionBtn ionBtn-danger" value="deleteTask"
+                [routerLink]="['/course/semester/delete-task',coursesdata.courseCode,coursesemesterdata1.semester_time]">
                 <ion-icon name="trash" slot="start"></ion-icon>
                 {{ 'DELETETASK' | translate }}
             </ion-button>
         </ion-col>
     </ion-row>
+    <ion-row *ngIf="hidebutton">
+        <ion-col size="12" *ngIf="coursesemesterdata1">
+            <ion-button id="assignments-uploadAssignmentBtn" type="submit" expand="block" *ngIf="isTeacher"
+                class="ionBtn ionBtn-primary" value="uploadAssignmentSolution"
+                [routerLink]="['/course/semester/upload-assignment',coursesdata.courseCode,coursesemesterdata1.semester_time]">
+                <ion-icon name="trash" slot="start"></ion-icon>
+                {{ 'UPLOADASSIGNMENT' | translate }}
+            </ion-button>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col size="12" *ngIf="coursesemesterdata1">
+            <ion-button id="assignments-uploadAssignmentBtn" type="submit" expand="block" *ngIf="isTeacher"
+                class="ionBtn ionBtn-primary" value="uploadAssignmentSolution"
+                [routerLink]="['/course/semester/upload-assignment',coursesdata.courseCode,coursesemesterdata1.semester_time]">
+                <ion-icon name="trash" slot="start"></ion-icon>
+                {{ 'ASSIGNMENTSOLUTIONS' | translate }}
+            </ion-button>
+        </ion-col>
+    </ion-row>
+
 </ion-content>

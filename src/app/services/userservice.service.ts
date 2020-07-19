@@ -18,7 +18,7 @@ export class UserserviceService {
   public get currentClickedUserValue(): User {
     return this.currentClickedUserSubject.value;
   }
-  url: any = "http://192.168.1.6:3000";
+  url: any = "http://192.168.1.5:3000";
 
   getClickedUser(UserId: string) {
     let headers = new HttpHeaders({ 'Content-Type': 'application/JSON' });

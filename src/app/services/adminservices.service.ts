@@ -50,7 +50,7 @@ export class AdminservicesService {
   updateRouterIdBody: any;
   updateRouterBody: any;
   deleterouterbody: any;
-  url: any = "http://192.168.1.6:3000";
+  url: any = "http://192.168.1.5:3000";
   addPostBody: any;
   deletepostbody: any;
 

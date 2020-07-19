@@ -12,28 +12,26 @@ import { TranslateConfigService } from 'src/app/services/translate-config.servic
 import * as dateFormat from 'dateformat';
 
 @Component({
-  selector: 'app-add-task',
-  templateUrl: 'add-task.page.html',
-  styleUrls: ['add-task.page.scss']
+  selector: 'app-upload-assignment',
+  templateUrl: './upload-assignment.page.html',
+  styleUrls: ['./upload-assignment.page.scss'],
 })
-export class addTaskPage implements OnInit {
 
+export class UploadAssignmentPage implements OnInit {
   currentUser: User;
   currentCourse: Course;
   currentCourseSemester: Semester;
-  _id: string;
-  coursesdata: any;
-
-  taskType: string;
-  taskPath: string;
   selectedLanguage: string;
   validations_form: FormGroup;
+  dataOfAssignmentSolution: any;
+  assignmentPath: string;
   sub: any;
   courseCode: string;
   semester_time: string;
-  dataOfDeadLineOfSolutions: any;
-  deadLine: any;
-
+  coursesdata: any;
+  coursesemesterdata: any;
+  noTasks: string;
+  taskType: any;
   constructor(
     private router: Router,
     private authenticationService: AuthService,
@@ -51,39 +49,28 @@ export class addTaskPage implements OnInit {
     this.currentCourseSemester = this.semesterserviceService.currentCourseSemesterValue;
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
   }
-  get isStudent() {
-    return this.currentUser && this.currentUser.role === Role.Student;
+  onSelectChange(event: any) {
+    //update the ui
+    this.taskType = event.target.value;
   }
-  get isTeacher() {
-    return this.currentUser && this.currentUser.role === Role.Teacher;
-  }
-
-  get isTeacherOrStudent() {
-    return this.currentUser && (this.currentUser.role === Role.Teacher || this.currentUser.role === Role.Student);
-  }
-  AddTask() {
-    let taskType = document.getElementById("taskTypeinput") as HTMLInputElement;
-    let taskPath = document.getElementById("taskPathinput") as HTMLInputElement;
-    let deadLine = document.getElementById("taskDeadLineinput") as HTMLInputElement;
+  uploadAssignment() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this.courseCode = params.get('courseCode');
       this.semester_time = params.get('semester_time');
-      this.taskType = taskType.value, this.taskPath = taskPath.value, this.deadLine = deadLine.value;
-      var now = new Date(new Date().setDate(new Date().getDate() + parseInt(this.deadLine)));
-      this.dataOfDeadLineOfSolutions = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
-      this.teacherservices.addCourseSemesterTask(this.courseCode, this.semester_time, this.taskType, this.taskPath, this.dataOfDeadLineOfSolutions).subscribe(res => {
-        this.alertservice.showAlert("&#xE876;", "success", res.msg);
-        taskType.value = "";
-        taskPath.value = "";
-        this.validations_form.reset();
-        this.navigateToAssigments();
-      }, err => {
-        this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
-      });
+      var now = new Date();
+      this.dataOfAssignmentSolution = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+      let solutionPath = document.getElementById("assignmentsolutionPathinput") as HTMLInputElement;
+      this.assignmentPath = solutionPath.value,
+        this.teacherservices.uploadAssignment(this.currentUser._id, this.courseCode, this.semester_time, this.dataOfAssignmentSolution, this.taskType, this.assignmentPath).subscribe(res => {
+          this.alertservice.showAlert("&#xE876;", "success", res.msg);
+          solutionPath.value = "";
+          this.validations_form.reset();
+          this.navigateToAssigments();
+        }, err => {
+          this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
+        });
     });
-
   }
-
   navigateToAssigments() {
     this.sub = this._Activatedroute.paramMap.subscribe(params => {
       this.courseCode = params.get('courseCode');
@@ -91,33 +78,36 @@ export class addTaskPage implements OnInit {
       this.router.navigate(['/course/semester/assignments/' + this.courseCode, this.semester_time])
     });
   }
-
-  languageChanged() {
-    this.translateConfigService.setLanguage(this.selectedLanguage);
-  }
-
-  ngOnInit(): void {
-    this.validations_form = this.formBuilder.group({
-      title: new FormControl('', Validators.required),
-      link: new FormControl('', Validators.required),
-      deadline: new FormControl('', Validators.required),
+  courseassignments() {
+    this.sub = this._Activatedroute.paramMap.subscribe(params => {
+      this.courseCode = params.get('courseCode');
+      this.semester_time = params.get('semester_time');
+      this.teacherservices.getCourseData(this.courseCode).subscribe(res => {
+        this.coursesdata = res.course;
+      }, err => {
+        this.coursesdata = err
+      }
+      );
+      this.teacherservices.getCourseSemesterData(this.courseCode, this.semester_time).subscribe(res => {
+        if (res.findsemesterdata.semesters[0].tasks) {
+          this.coursesemesterdata = res.findsemesterdata.semesters[0].tasks;
+        }
+      }, err => {
+        this.coursesemesterdata = err
+      }
+      );
     });
-    var now = new Date(new Date().setDate(new Date().getDate() + 1))
-    console.log(now)
   }
-
+  ngOnInit() {
+    this.courseassignments();
+    this.validations_form = this.formBuilder.group({
+      link: new FormControl('', Validators.required),
+    });
+  }
   validation_messages = {
-    'title': [
-      { type: 'required', message: 'Title is required.' }
-    ],
     'link': [
       { type: 'required', message: 'Link is required.' }
-    ],
-    'deadline': [
-      { type: 'required', message: 'Dead Line is required.' }
     ]
 
   };
-
-
 }

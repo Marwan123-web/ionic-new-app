@@ -84,8 +84,7 @@ export class homePage implements OnInit {
         this.getPosts();
       }, err => {
         this.alertservice.showAlert("&#xE5CD;", "error", err.error.msg);
-      }
-      );
+      });
   }
   deletePost(postid) {
     this.adminservices.deletePost(postid).subscribe(res => {

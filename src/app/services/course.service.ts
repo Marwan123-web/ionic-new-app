@@ -15,7 +15,7 @@ export class CourseService {
     this.currentCourseSubject = new BehaviorSubject<Course>(JSON.parse(localStorage.getItem('currentCourse')));
     this.currentCourse = this.currentCourseSubject.asObservable();
   }
-  url: any = "http://192.168.1.6:3000";
+  url: any = "http://192.168.1.5:3000";
 
   public get currentCourseValue(): Course {
     return this.currentCourseSubject.value;

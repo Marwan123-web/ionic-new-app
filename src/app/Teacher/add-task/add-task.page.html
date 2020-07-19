@@ -22,12 +22,14 @@
                 </ion-label>
             </ion-item>
             <ion-item id="addTask-titleInput">
-                <ion-input type="text" formControlName="title" placeholder="Enter Task Title" id="taskTypeinput" #taskType required>
+                <ion-input type="text" formControlName="title" placeholder="Enter Task Title" id="taskTypeinput"
+                    #taskType required>
                 </ion-input>
             </ion-item>
             <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_messages.title">
-                    <div class="error-message" *ngIf="validations_form.get('title').hasError(validation.type) && (validations_form.get('title').dirty || validations_form.get('title').touched)">
+                    <div class="error-message"
+                        *ngIf="validations_form.get('title').hasError(validation.type) && (validations_form.get('title').dirty || validations_form.get('title').touched)">
                         <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
                     </div>
                 </ng-container>
@@ -38,18 +40,39 @@
                 </ion-label>
             </ion-item>
             <ion-item id="addTask-linkInput">
-                <ion-input type="text" formControlName="link" placeholder="Enter Task Link" id="taskPathinput" #taskPath required>
+                <ion-input type="text" formControlName="link" placeholder="Enter Task Link" id="taskPathinput" #taskPath
+                    required>
                 </ion-input>
             </ion-item>
             <div class="validation-errors">
                 <ng-container *ngFor="let validation of validation_messages.link">
-                    <div class="error-message" *ngIf="validations_form.get('link').hasError(validation.type) && (validations_form.get('link').dirty || validations_form.get('link').touched)">
+                    <div class="error-message"
+                        *ngIf="validations_form.get('link').hasError(validation.type) && (validations_form.get('link').dirty || validations_form.get('link').touched)">
+                        <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                    </div>
+                </ng-container>
+            </div>
+            <ion-item id="addTask-deadLine">
+                <ion-label>
+                    {{ 'DEADLINE' | translate}}
+                </ion-label>
+            </ion-item>
+            <ion-item id="addTask-deadLineInput">
+                <ion-input type="number" formControlName="deadline" placeholder="Enter Days Of DeadLine"
+                    id="taskDeadLineinput" #taskDeadLine required>
+                </ion-input>
+            </ion-item>
+            <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.deadline">
+                    <div class="error-message"
+                        *ngIf="validations_form.get('deadline').hasError(validation.type) && (validations_form.get('deadline').dirty || validations_form.get('deadline').touched)">
                         <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
                     </div>
                 </ng-container>
             </div>
             <br>
-            <ion-button id="addTask-addNewTaskBtn" type="submit" expand="block" [disabled]="!validations_form.valid" class="ionBtn ionBtn-success" value="AddNewTask">
+            <ion-button id="addTask-addNewTaskBtn" type="submit" expand="block" [disabled]="!validations_form.valid"
+                class="ionBtn ionBtn-success" value="AddNewTask">
                 <ion-icon name="add" slot="start"></ion-icon>
                 {{ 'ADDNEWTASK' | translate }}
             </ion-button>
